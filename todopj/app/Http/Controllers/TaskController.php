@@ -16,6 +16,8 @@ class TaskController extends Controller
     public function index()
     {
         $todolist = Todolist::all();
+        $user = Auth::user();
+        
         return view('index', ['todolist' => $todolist]);
     }
 
