@@ -138,7 +138,9 @@
         <div class="todolist_headder">
           <p class="todolist_headder_title">Todo List</p>
           <div class="todolist_headder_item">
-            <p>ログイン中</p><!--仮の文章-->
+            @if(Auth::check())
+              <p>「{{$user->name }}」でログイン中</p>
+            @endif
             <a href="/logout" class="todolist_headder_item_logout">
               <button class="todolist_headder_item_logout_button">ログアウト</button>
             </a>
