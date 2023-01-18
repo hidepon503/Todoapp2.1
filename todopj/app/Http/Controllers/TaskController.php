@@ -17,7 +17,7 @@ class TaskController extends Controller
     {
         $todolist = Todolist::all();
         $user = Auth::user();
-        
+        $tag = Tag::all();
         return view('index', ['todolist' => $todolist]);
     }
 
@@ -43,4 +43,21 @@ class TaskController extends Controller
         Todolist::find($request->id)->delete();
         return redirect('/');
     }
+
+    public function find(Request $request);
+    {
+        $user = Auth::user();
+        $tag = Tag::all();
+        return view('/search', ['todolist' => '']);
+    }
+
+    public function search(ClientRequest $request);
+    {
+        $user = Auth::user();
+        $tag = Tag::all();
+        $keyword = $request -> keyword
+        $tag_id = $request -> tag_id();
+    }
+
+
 }
