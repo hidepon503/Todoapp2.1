@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\COntrollers\taskcontroller;
-use App\Http\COntrollers\RegisteredUserController;
-use App\Http\COntrollers\AuthenticatedSessionController;
+use App\Http\Controllers\taskcontroller;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\AuthenticatedSessionController;
 
 
 
@@ -19,6 +19,11 @@ Route::post('/delete',[TaskController::class, 'delete']);
 Route::get('/find',[TaskController::class, 'find']);
 Route::get('/search',[TaskController::class, 'search']);
 
+/*
+breezeインストール直後は下記の内容しかない。
+このルーティングでwelcome.blade.phpやdashboard.blade.phpを返している。
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,5 +31,19 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+記述を下記の様に変更する事で初期画面をwelcomeからregisterに変え、ログイン後ミドルウェアを介してindexを返している
+
+*/
+
+Route::get('/', function () {
+    return view('register');
+});
+
+Route::get('/', function () {
+    return view('index');
+})->middleware(['auth'])->name('index');
 
 require __DIR__.'/auth.php';

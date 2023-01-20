@@ -139,7 +139,7 @@
           <p class="todolist_headder_title">Todo List</p>
           <div class="todolist_headder_item">
             @if(Auth::check())
-              <p>「{{$user->name }}」でログイン中</p>
+              <p>「{{ $user->name }}」でログイン中</p>
             @endif
             <a href="/logout" class="todolist_headder_item_logout">
               <button class="todolist_headder_item_logout_button">ログアウト</button>
@@ -150,13 +150,13 @@
           <button class="todolist_find_button">タスク検索</button>
         </a> 
         <form action="/create" class="todolist_task-create"  method="POST">
-        @if (count($errors) > 0)
-          <ul class="todolist_warning">
-            @foreach ($errors->all() as $error)
-              <li class="todolist_warning-title">{{$error}}</li>
-            @endforeach
-          </ul>
-        @endif
+          @if (count($errors) > 0)
+            <ul class="todolist_warning">
+              @foreach ($errors->all() as $error)
+                <li class="todolist_warning-title">{{$error}}</li>
+              @endforeach
+            </ul>
+          @endif
           @csrf
             <input type="text" class="todolist_task-create-form"  name="name" >
             <button class="todolist_task-create-bottun">追加</button>
