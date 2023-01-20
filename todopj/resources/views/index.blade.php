@@ -138,7 +138,7 @@
         <div class="todolist_headder">
           <p class="todolist_headder_title">Todo List</p>
           <div class="todolist_headder_item">
-            @if(Auth::check())
+            @if(User::all())
               <p>「{{ $user->name }}」でログイン中</p><!--名前の代入方法??-->
             @endif
             <a href="/logout" class="todolist_headder_item_logout">

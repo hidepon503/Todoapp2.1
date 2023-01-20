@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\Todolist;
+use App\Models\User;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -18,9 +20,9 @@ class TaskController extends Controller
     public function index()
     {
         $todolist = Todolist::all();
-        $user = Auth::user();
+        $user = User::name();
         $tag = Tag::all();
-        return view('index', ['todolist' => $todolist]);
+        return view('index', ['todolists' => $todolist]);
     }
 
     public function create(ClientRequest $request)
