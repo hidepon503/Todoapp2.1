@@ -13,7 +13,7 @@ class Todolist extends Model
 
     public function users()
     {
-        return $this->BelongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function tags()

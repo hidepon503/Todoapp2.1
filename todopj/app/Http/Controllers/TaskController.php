@@ -5,6 +5,8 @@ use App\Models\Todolist;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 
 class TaskController extends Controller
 {
