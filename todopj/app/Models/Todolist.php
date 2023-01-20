@@ -11,5 +11,13 @@ class Todolist extends Model
     use HasFactory;
     protected $fillable = ['created_at', 'name'];
 
-    
+    public function users()
+    {
+        return $this->BelongsTo('App\Models\User');
+    }
+
+    public function tags()
+    {
+        return $this->belongsTo('App\Models\Tag');
+    }
 }

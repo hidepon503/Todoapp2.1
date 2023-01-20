@@ -50,10 +50,10 @@
                 <x-button class="ml-3">
                     {{ __('Log in') }}
                 </x-button>
-                <x-button class="ml-3">
-                    {{ __('Register') }}
-                </x-button>
             </div>
         </form>
+        @if (Route::has('register'))
+            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+        @endif
     </x-auth-card>
 </x-guest-layout>

@@ -23,6 +23,11 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function todolists()
+    {
+        return $this->hasMany('App\Models\Todolist');
+    }
+
     
 
     /**
