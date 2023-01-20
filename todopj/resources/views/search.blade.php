@@ -130,6 +130,16 @@
       color:#88fbe0;
       border-radius:5px;
     }
+
+    .todolist_return_button{
+      width:60px;
+      height: 35px;
+      background-color:#FFFFFF;
+      border-color: #f99770;;
+      color:#f99770;
+      border-radius:5px;
+    }
+
   </style>
 </head>
 <body>
@@ -158,7 +168,7 @@
             <th class="todolist_table-create">更新</th>
             <th class="todolist_table-delete">削除</th>
           </tr>
-            @foreach($todolist as $todolist)
+            @foreach($todolists as $todolist)
               <tr>
                     <td>{{$todolist->created_at}}</td>
                   <form action="/edit" class="" method="POST">

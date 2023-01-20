@@ -22,7 +22,7 @@ class TaskController extends Controller
         $todolist = Todolist::all();
         $user = Auth::user();
         $tag = Tag::all();
-        return view('index', ['todolists' => $todolist, 'users' => $user]);
+        return view('index', ['todolists' => $todolist, 'user' => $user]);
     }
 
     public function create(ClientRequest $request)
@@ -48,19 +48,20 @@ class TaskController extends Controller
         return redirect('/');
     }
 
-    public function find(Request $request);
+    public function find(Request $request)
     {
         $user = Auth::user();
         $tag = Tag::all();
-        return view('/search', ['todolist' => '']);
+        $todolist = Todolist::all();
+        return view('/search', ['todolists' => $todolist]);
     }
 
-    public function search(ClientRequest $request);
+    public function search(ClientRequest $request)
     {
         $user = Auth::user();
         $tag = Tag::all();
-        $keyword = $request -> keyword
-        $tag_id = $request -> tag_id();
+        $keyword = $request -> keyword;
+        $tag_id = $request -> tag_id;
     }
 
 

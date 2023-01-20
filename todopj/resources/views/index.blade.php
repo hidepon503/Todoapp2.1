@@ -41,23 +41,20 @@
     }
     .todolist_headder_item {
       display: flex;
-      margin-right:-50px;
+      margin-right:20px;
       align-items:center;
       justify-content: flex-end;
-    }
-
-    .todolist_headder_item_logout {
-      width:250px;
     }
 
      .todolist_headder_item_logout_button {
       width:120px;
       height: 35px;
-      margin-left:30px;
+      margin-left:20px;
       background-color:#FFFFFF;
       border-color:#FF8080;
       color:#FF8080;
       border-radius:5px;
+      cursor:pointer;
     }
 
     .todolist_find {
@@ -66,7 +63,7 @@
     .todolist_find_button {
       width:100px;
       height: 35px;
-      margin: -20px 0 10px 0px;
+      margin: 0 0 1% 5%;
       background-color:#FFFFFF;
       border-color:#CDF119;
       color:#CDF119;
@@ -74,30 +71,40 @@
     }
 
     .todolist_warning {
-      margin-left:-30px;
+      margin-left:5%;
     }
 
     .todolist_task-create-form{
-      width:80%;
+      width: 65%;
       height: 30px;
+      margin-left:5%;
       border-radius: 5px;
       border-color: #E6E6E6;
     }
-    
-    .todolist_table {
-      margin-top:20px;
-      width: 100%;
+
+    .todolist_table-select-tag {
+      width:5%;
+      height: 40px;
+      margin: 0 5% 0 5%;
+      border-radius: 5px;
+      border-color: #E6E6E6;
       text-align:center;
     }
-   
+    
     .todolist_task-create-bottun {
       width:10%;
       height: 35px;
-      margin-left:30px;
+      
       background-color:#FFFFFF;
       border-color:#e181fb;
       color:#e181fb;
       border-radius:5px;
+    }
+
+    .todolist_table {
+      margin-top:20px;
+      width: 100%;
+      text-align:center;
     }
 
     .todolist_table_edit_form {
@@ -138,12 +145,13 @@
         <div class="todolist_headder">
           <p class="todolist_headder_title">Todo List</p>
           <div class="todolist_headder_item">
-     
-              <p>「{{ $user->name }}」でログイン中</p><!--名前の代入方法??-->
-     
-            <a href="/logout" class="todolist_headder_item_logout">
-              <button class="todolist_headder_item_logout_button">ログアウト</button>
-            </a>
+            @if(Auth::check())
+              <p>「{{ $user -> name }}」でログイン中</p><!--名前の代入方法??-->
+            @endif
+            <form action="/logout" method="post">
+              @csrf
+              <input type=submit class="todolist_headder_item_logout_button" value="ログアウト">
+            </form>            
           </div>
         </div>
         <a href="/find" class="todolist_find">
@@ -159,6 +167,13 @@
           @endif
           @csrf
             <input type="text" class="todolist_task-create-form"  name="name" >
+            <select name="tag_id" class="todolist_table-select-tag">
+              <option value="1">家事</option>
+              <option value="2">勉強</option>
+              <option value="3">運動</option>
+              <option value="4">食事</option>
+              <option value="5">異動</option>
+            </select>
             <button class="todolist_task-create-bottun">追加</button>
         </form>
         <table class="todolist_table">
