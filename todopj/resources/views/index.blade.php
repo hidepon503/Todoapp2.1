@@ -199,18 +199,20 @@
                       <input type="hidden" name="id" value="{{$todolist->id}}"> 
                     </td>
                     <td>
-                      <select name="tag_id" class="todolist_table-select-tag">
-                        @foreach($tags as $tag)
-                         <option value="{{$tag->id}}">{{$tag->name}}</option>
-                        @endforeach 
-                        <!--
-                        <option value="1">家事</option>
-                        <option value="2">勉強</option>
-                        <option value="3">運動</option>
-                        <option value="4">食事</option>
-                        <option value="5">移動</option>
-                        -->
-                      </select>
+                        <select name="tag_id" id="tag_id" class="todolist_table-select-tag" >
+                          @foreach($tags as $tag)
+                          <option value="{{ $tag->id }}" @if ($tag->id == old('tag_id', $todolist['tag_id'])) selected @endif>{{ $tag->name }}</option>
+
+                          @endforeach
+                          
+                          <!--
+                          <option value="1">家事</option>
+                          <option value="2">勉強</option>
+                          <option value="3">運動</option>
+                          <option value="4">食事</option>
+                          <option value="5">移動</option>
+                          -->
+                        </select>
                     </td>
                     <td>
                       <button class="todolist_table-edit-bottun">更新</button>
