@@ -29,10 +29,9 @@ class TaskController extends Controller
     {
         $form = $request->all();
         unset($form['_token']);
-        $user_id = User::id();
-        $tag_id = Tag::id();
-        Todolist::create($form ,['user_id' => $user_id, 'tag_id' => $tag_id] );      
-        return redirect('/');
+        $form['user_id'] = Auth::id();
+        Todolist::create($form);      
+        return redirect('/',);
     }
 
     public function edit(ClientRequest $request)
