@@ -201,8 +201,9 @@
                     <td>
                         <select name="tag_id" id="tag_id" class="todolist_table-select-tag" >
                           @foreach($tags as $tag)
-                          <option value="{{ $tag->id }}" @if ($tag->id == old('tag_id', $todolist['tag_id'])) selected @endif>{{ $tag->name }}</option>
-
+                          <option value="{{ $tag->id }}" @if ($tag->id == old('tag_id', $todolist['tag_id'])) selected @endif>
+                            {{ $tag->name }}
+                          </option>
                           @endforeach
                           
                           <!--
