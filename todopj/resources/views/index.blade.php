@@ -116,6 +116,7 @@
 
     .todolist_table-select-tag{
       height:30px;
+      width:60px;
       border-radius:5px;
       border-color: #E6E6E6;
     }
@@ -146,7 +147,7 @@
           <p class="todolist_headder_title">Todo List</p>
           <div class="todolist_headder_item">
             @if(Auth::check())
-              <p>「{{ $user -> name }}」でログイン中</p><!--名前の代入方法??-->
+              <p>「{{ $user -> name }}」でログイン中</p>
             @endif
             <form action="/logout" method="post">
               @csrf
@@ -168,11 +169,14 @@
           @csrf
             <input type="text" class="todolist_task-create-form"  name="name" >
             <select name="tag_id" class="todolist_table-select-tag">
-              <option value="1">家事</option>
-              <option value="2">勉強</option>
-              <option value="3">運動</option>
-              <option value="4">食事</option>
-              <option value="5">異動</option>
+              @foreach($tags as $tag)
+               <option value="{{$tag->id}}">{{$tag->name}}</option>
+              @endforeach
+               <!--<option value="1">家事</option>
+               <option value="2">勉強</option>
+               <option value="3">運動</option>
+               <option value="4">食事</option>
+               <option value="5">移動</option>-->
             </select>
             <button class="todolist_task-create-bottun">追加</button>
         </form>
@@ -184,7 +188,7 @@
             <th class="todolist_table-create">更新</th>
             <th class="todolist_table-delete">削除</th>
           </tr>
-            @foreach($todolists as $todolist)<!--エラーの原因が分からない-->
+            @foreach($todolists as $todolist)
               <tr>
                     <td>{{$todolist->created_at}}</td>
                   <form action="/edit" class="" method="POST">
@@ -199,7 +203,7 @@
                         <option value="2">勉強</option>
                         <option value="3">運動</option>
                         <option value="4">食事</option>
-                        <option value="5">異動</option>
+                        <option value="5">移動</option>
                       </select>
                     </td>
                     <td>
