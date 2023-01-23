@@ -21,16 +21,16 @@ class TaskController extends Controller
     {
         $todolist = Todolist::all();
         $user = Auth::user();
-        $tags = Tag::all();
-        return view('index', ['todolists' => $todolist, 'user' => $user]);
+        $tag = Tag::all();
+        return view('index', ['todolists' => $todolist, 'user' => $user, 'tags' => $tag]);
     }
 
     public function create(ClientRequest $request)
     {
         $form = $request->all();
+        $tag = Tag::find($request->id);
         unset($form['_token']);
         $form['user_id'] = Auth::id();
-        $tags = Tag::all();
         Todolist::create($form);      
         return redirect('/',);
     }
@@ -38,7 +38,7 @@ class TaskController extends Controller
     public function edit(ClientRequest $request)
     {
         $form = $request->all();
-        $tags = Tag::all();
+
         $todolist = Todolist::find($request->id);
         unset($form['_token']);
         $form['user_id'] = Auth::id();
@@ -62,11 +62,14 @@ class TaskController extends Controller
 
     public function search(ClientRequest $request)
     {
+        $todolist = Todolist::all();
         $user = Auth::user();
-        $tag = Tag::all();
+        $tags = Tag::all();
         $keyword = $request -> keyword;
         $tag_id = $request -> tag_id;
+        return view('search', ['todolists' => $todolist, 'user' => $user, 'tags' => $tags]);
     }
 
 
 }
+        

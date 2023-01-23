@@ -144,9 +144,9 @@
 </head>
 <body>
   <div class="container">
-      <div class="タスク検索">
+      <div class="todolist">
         <div class="todolist_headder">
-          <p class="todolist_headder_title">Todo List</p>
+          <p class="todolist_headder_title">タスク検索</p>
           <div class="todolist_headder_item">
             <p>ログイン中</p><!--仮の文章-->
             <a href="/logout" class="todolist_headder_item_logout">
@@ -155,10 +155,15 @@
           </div>
         </div>
         
-        <form action="/create" class="todolist_task-create"  method="POST">     
+        <form action="/search" class="todolist_task-create"  method="POST">     
           @csrf
           <input type="text" class="todolist_task-create-form"  name="name" >
-          <button class="todolist_task-create-bottun">追加</button>
+            <select name="tag_id" class="todolist_table-select-tag">
+              @foreach($tags as $tag)
+               <option value="{{$tag->id}}">{{$tag->name}}</option>
+              @endforeach
+            </select>
+          <button class="todolist_task-create-bottun">検索</button>
         </form>
         <table class="todolist_table">
           <tr>
