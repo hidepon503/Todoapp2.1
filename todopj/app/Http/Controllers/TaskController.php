@@ -39,6 +39,7 @@ class TaskController extends Controller
         $form = $request->all();
         $todolist = Todolist::find($request->id);
         unset($form['_token']);
+        $form['user_id'] = Auth::id();
         Todolist::where('id', $request->id)->update($form);
         return redirect('/');
     } 
