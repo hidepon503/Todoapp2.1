@@ -41,23 +41,20 @@
     }
     .todolist_headder_item {
       display: flex;
-      margin-right:-50px;
+      margin-right:20px;
       align-items:center;
       justify-content: flex-end;
-    }
-
-    .todolist_headder_item_logout {
-      width:250px;
     }
 
      .todolist_headder_item_logout_button {
       width:120px;
       height: 35px;
-      margin-left:30px;
+      margin-left:20px;
       background-color:#FFFFFF;
       border-color:#FF8080;
       color:#FF8080;
       border-radius:5px;
+      cursor:pointer;
     }
 
     .todolist_find {
@@ -66,7 +63,7 @@
     .todolist_find_button {
       width:100px;
       height: 35px;
-      margin: -20px 0 10px 0px;
+      margin: 0 0 1% 5%;
       background-color:#FFFFFF;
       border-color:#CDF119;
       color:#CDF119;
@@ -74,30 +71,40 @@
     }
 
     .todolist_warning {
-      margin-left:-30px;
+      margin-left:5%;
     }
 
     .todolist_task-create-form{
-      width:80%;
+      width: 65%;
       height: 30px;
+      margin-left:5%;
       border-radius: 5px;
       border-color: #E6E6E6;
     }
-    
-    .todolist_table {
-      margin-top:20px;
-      width: 100%;
+
+    .todolist_table-select-tag {
+      width:5%;
+      height: 40px;
+      margin: 0 5% 0 5%;
+      border-radius: 5px;
+      border-color: #E6E6E6;
       text-align:center;
     }
-   
+    
     .todolist_task-create-bottun {
       width:10%;
       height: 35px;
-      margin-left:30px;
+      
       background-color:#FFFFFF;
       border-color:#e181fb;
       color:#e181fb;
       border-radius:5px;
+    }
+
+    .todolist_table {
+      margin-top:20px;
+      width: 100%;
+      text-align:center;
     }
 
     .todolist_table_edit_form {
@@ -109,6 +116,7 @@
 
     .todolist_table-select-tag{
       height:30px;
+      width:60px;
       border-radius:5px;
       border-color: #E6E6E6;
     }
@@ -132,13 +140,15 @@
     }
 
     .todolist_return_button{
-      width:60px;
+      width:100px;
       height: 35px;
+      margin: 0 0 1% 5%;
       background-color:#FFFFFF;
-      border-color: #f99770;;
-      color:#f99770;
+      border-color:#CDF119;
+      color:#CDF119;
       border-radius:5px;
     }
+
 
   </style>
 </head>
@@ -148,22 +158,31 @@
         <div class="todolist_headder">
           <p class="todolist_headder_title">タスク検索</p>
           <div class="todolist_headder_item">
-            <p>ログイン中</p><!--仮の文章-->
-            <a href="/logout" class="todolist_headder_item_logout">
-              <button class="todolist_headder_item_logout_button">ログアウト</button>
-            </a>
+            @if(Auth::check())
+              <p>「{{ $user -> name }}」でログイン中</p>
+            @endif
+            <form action="/logout" method="post">
+              @csrf
+              <input type=submit class="todolist_headder_item_logout_button" value="ログアウト">
+            </form>            
           </div>
         </div>
-        
-        <form action="/search" class="todolist_task-create"  method="POST">     
+        <form action="/search" class="todolist_task-create"  method="POST">
+          @if (count($errors) > 0)
+            <ul class="todolist_warning">
+              @foreach ($errors->all() as $error)
+                <li class="todolist_warning-title">{{$error}}</li>
+              @endforeach
+            </ul>
+          @endif
           @csrf
-          <input type="text" class="todolist_task-create-form"  name="name" >
+            <input type="text" class="todolist_task-create-form"  name="name" >
             <select name="tag_id" class="todolist_table-select-tag">
               @foreach($tags as $tag)
                <option value="{{$tag->id}}">{{$tag->name}}</option>
               @endforeach
             </select>
-          <button class="todolist_task-create-bottun">検索</button>
+            <button class="todolist_task-create-bottun">追加</button>
         </form>
         <table class="todolist_table">
           <tr>
@@ -183,13 +202,13 @@
                       <input type="hidden" name="id" value="{{$todolist->id}}"> 
                     </td>
                     <td>
-                      <select name="tag_id" class="todolist_table-select-tag">
-                        <option value="1">家事</option>
-                        <option value="2">勉強</option>
-                        <option value="3">運動</option>
-                        <option value="4">食事</option>
-                        <option value="5">異動</option>
-                      </select>
+                        <select name="tag_id" id="tag_id" class="todolist_table-select-tag" >
+                          @foreach($tags as $tag)
+                            <option value="{{ $tag->id }}" @if ($tag->id == old('tag_id', $todolist['tag_id'])) selected @endif>
+                              {{ $tag->name }}
+                            </option>
+                          @endforeach                   
+                        </select>
                     </td>
                     <td>
                       <button class="todolist_table-edit-bottun">更新</button>
