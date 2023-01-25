@@ -167,7 +167,10 @@
             </form>            
           </div>
         </div>
-        <form action="/search" class="todolist_task-create"  method="POST">
+
+        <!--検索フォーム-->
+
+        <form action="/search" class="todolist_task-create"  method="get">
           @if (count($errors) > 0)
             <ul class="todolist_warning">
               @foreach ($errors->all() as $error)
@@ -176,53 +179,60 @@
             </ul>
           @endif
           @csrf
-            <input type="text" class="todolist_task-create-form"  name="name" >
+            <input type="text" class="todolist_task-create-form"  name="keyword" >
             <select name="tag_id" class="todolist_table-select-tag">
               @foreach($tags as $tag)
                <option value="{{$tag->id}}">{{$tag->name}}</option>
               @endforeach
             </select>
-            <button class="todolist_task-create-bottun">追加</button>
+            <button class="todolist_task-create-bottun">検索</button>
         </form>
-        <table class="todolist_table">
-          <tr>
-            <th class="todolist_table-date">作成日</th>
-            <th class="todolist_table-task">タスク名</th>
-            <th class="todolist_table-task">タグ</th>
-            <th class="todolist_table-create">更新</th>
-            <th class="todolist_table-delete">削除</th>
-          </tr>
-            @foreach($todolists as $todolist)
-              <tr>
-                    <td>{{$todolist->created_at}}</td>
-                  <form action="/edit" class="" method="POST">
-                    @csrf
-                    <td>
-                      <input type="text" class="todolist_table_edit_form"  name="name" value="{{$todolist->name}}" >
-                      <input type="hidden" name="id" value="{{$todolist->id}}"> 
-                    </td>
-                    <td>
-                        <select name="tag_id" id="tag_id" class="todolist_table-select-tag" >
-                          @foreach($tags as $tag)
-                            <option value="{{ $tag->id }}" @if ($tag->id == old('tag_id', $todolist['tag_id'])) selected @endif>
-                              {{ $tag->name }}
-                            </option>
-                          @endforeach                   
-                        </select>
-                    </td>
-                    <td>
-                      <button class="todolist_table-edit-bottun">更新</button>
-                    </td>
-                  </form>
-                    <td>
-                      <form action="/delete" method="POST">
-                        @csrf
-                        <input type="hidden" name="id" value="{{$todolist->id}}"> 
-                        <button class="todolist_table-delete-bottun">削除</button>
-                      </form>                    
-                    </td>
-              </tr>
-            @endforeach  
+
+        <!--検索フォームここまで-->
+
+         <table class="todolist_table">
+               <tr>
+                 <th class="todolist_table-date">作成日</th>
+                 <th class="todolist_table-task">タスク名</th>
+                 <th class="todolist_table-task">タグ</th>
+                 <th class="todolist_table-create">更新</th>
+                 <th class="todolist_table-delete">削除</th>
+               </tr>
+          
+            @if(<!--$itemがN個以上ある時に返す-->)
+              @foreach($items as $item)
+                <!--キーワードとタグの検索にヒットしたものを繰り返す-->
+                <tr>
+                      <td>{{$items->created_at}}</td>
+                    <form action="/edit" class="" method="POST">
+                      @csrf
+                      <td>
+                        <input type="text" class="todolist_table_edit_form"  name="name" value="{{$item->name}}" >
+                        <input type="hidden" name="id" value="{{$item->id}}"> 
+                      </td>
+                      <td>
+                          <select name="tag_id" id="tag_id" class="todolist_table-select-tag" >
+                            @foreach($tags as $tag)
+                              <option value="{{ $tag->id }}" @if ($tag->id == old('tag_id', $todolist['tag_id'])) selected @endif>
+                                {{ $tag->name }}
+                              </option>
+                            @endforeach                   
+                          </select>
+                      </td>
+                      <td>
+                        <button class="todolist_table-edit-bottun">更新</button>
+                      </td>
+                    </form>
+                      <td>
+                        <form action="/delete" method="POST">
+                          @csrf
+                          <input type="hidden" name="id" value="{{$todolist->id}}"> 
+                          <button class="todolist_table-delete-bottun">削除</button>
+                        </form>                    
+                      </td>
+                </tr>
+              @endforeach  
+            @endif
         </table>
         <a href="/" class="todolis_return">
           <button class="todolist_return_button">戻る</button>
