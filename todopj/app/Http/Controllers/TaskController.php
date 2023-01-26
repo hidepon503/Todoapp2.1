@@ -28,7 +28,6 @@ class TaskController extends Controller
     public function create(ClientRequest $request)
     {
         $form = $request->all();
-        
         unset($form['_token']);
         $form['user_id'] = Auth::id();
         Todolist::create($form);      
@@ -54,12 +53,32 @@ class TaskController extends Controller
 
     public function find(Request $request)
     {
-        $items = $query->get();
-        $query = Todolist::query();
         $user = Auth::user();
         $tag = Tag::all();
+        $keyword = $request -> input('keyword');
+        $tag_id = $request -> input('tag_id');
+        /*$user_id = $request -> input('user_id');
+        検索にユーザーは含まれていないので不要 */
+        $query = Todolist::query();
+        $query->join('tags', function ($query) use ($request){
+            $query->on('todolists.tag_id','=', 'tags.id');
+            })->join('users',function ($query) use ($request){
+            $query->on('todolists.user_id', '=', 'users.id');
+            });
 
-        return view('/search', [ 'user' => $user, 'tags' => $tag]);
+        if(!empty($tag_id)){
+            $query->where('tag_id', 'LIKE', $tag_id);
+        }
+        /*if(!empty($user_id)){
+            $query->where('user', 'LIKE', $user_id);
+        }*/
+        if(!empty($keyword)){
+            $query->where('name', 'LIKE', "%{keyword}%");
+        }
+
+        $items = $query->get();
+        
+        return view('search', [ 'user' => $user, 'tags' => $tag]);
     }
 
     
@@ -68,22 +87,20 @@ class TaskController extends Controller
         $keyword = $request -> input('keyword');
         $tag_id = $request -> input('tag_id');
         /*$user_id = $request -> input('user_id');
-        ユーザーは含まれていないので不要 */
+        検索にユーザーは含まれていないので不要 */
         $query = Todolist::query();
         $query->join('tags', function ($query) use ($request){
             $query->on('todolists.tag_id','=', 'tags.id');
-            })->$join('users',function ($query) use ($request){
+            })->join('users',function ($query) use ($request){
             $query->on('todolists.user_id', '=', 'users.id');
             });
 
         if(!empty($tag_id)){
             $query->where('tag_id', 'LIKE', $tag_id);
         }
-
-        if(!empty($user_id)){
+        /*if(!empty($user_id)){
             $query->where('user', 'LIKE', $user_id);
-        }
-
+        }*/
         if(!empty($keyword)){
             $query->where('name', 'LIKE', "%{keyword}%");
         }
@@ -91,7 +108,7 @@ class TaskController extends Controller
         $items = $query->get();
         $tag = Tag::all();
  
-        return view('/search', compact('items', 'keyword', 'tag_id', 'tag_list'));
+        return view('search', compact('items', 'keyword', 'tag_id', 'tag_list'));
     }
 
 

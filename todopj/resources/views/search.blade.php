@@ -199,7 +199,7 @@
                  <th class="todolist_table-delete">削除</th>
                </tr>
           
-            @if(<!--$itemがN個以上ある時に返す-->)
+            @if(!empty($items))
               @foreach($items as $item)
                 <!--キーワードとタグの検索にヒットしたものを繰り返す-->
                 <tr>
