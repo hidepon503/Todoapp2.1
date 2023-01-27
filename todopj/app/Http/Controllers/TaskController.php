@@ -54,7 +54,7 @@ class TaskController extends Controller
     public function find(Request $request)
     {
         $user = Auth::user();
-        $tag = Tag::all();
+        $tags = Tag::all();
         $keyword = $request -> input('keyword');
         $tag_id = $request -> input('tag_id');
         /*$user_id = $request -> input('user_id');
@@ -62,24 +62,26 @@ class TaskController extends Controller
         $query = Todolist::query();
         $items = $query->get();
         
-        return view('search', [ 'user' => $user, 'tags' => $tag,]);
+        return view('search', [ 'user' => $user, 'tags' => $tags,]);
     }
 
     
     public function search(ClientRequest $request)
     {
+        $tags = Tag::all();
         $user = Auth::user();
         $keyword = $request -> input('keyword');
         $tag_id = $request -> input('tag_id');
-        /*$user_id = $request -> input('user_id');
-        検索にユーザーは含まれていないので不要 */
+        $user_id = $request -> input('user_id');
+        $form['user_id'] = Auth::id();
+         
         $query = Todolist::query();
         $query->join('tags', function ($query) use ($request){
             $query->on('todolists.tag_id','=', 'tags.id');
             })->join('users',function ($query) use ($request){
             $query->on('todolists.user_id', '=', 'users.id');
             });
-        
+                    
         if(!empty($tag_id)){
             $query->where('tag_id', 'LIKE', $tag_id);
         }
@@ -87,16 +89,16 @@ class TaskController extends Controller
 
         /*if(!empty($user_id)){
             $query->where('user', 'LIKE', $user_id);
-        }ユーザーidでは検索を行わない？*/
+        }*/
+
         if(!empty($keyword)){
             $query->where('todolists.name', 'LIKE', "%{keyword}%");
         }
 
         $items = $query->get();
-        $tag = Tag::all();
-        
+
  
-        return view('search', ['items' =>$items, 'keyword' =>$keyword, 'tag_id'=>$tag_id, 'tag'=>$tag,'user'=>$user]);
+        return view('search', compact('items', 'keyword', 'tag_id', 'tags', 'user'));
     }
 
 
