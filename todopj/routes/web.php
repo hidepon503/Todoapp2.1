@@ -22,7 +22,6 @@ Route::get('/search',[TaskController::class, 'search']);
 breezeインストール直後は下記の内容しかない。
 このルーティングでwelcome.blade.phpやdashboard.blade.phpを返している。
 
-
 Route::get('/', function () {
     return view('welcome');
 });

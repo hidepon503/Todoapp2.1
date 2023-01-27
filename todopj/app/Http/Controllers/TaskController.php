@@ -41,13 +41,13 @@ class TaskController extends Controller
         unset($form['_token']);
         $form['user_id'] = Auth::id();
         Todolist::where('id', $request->id)->update($form);
-        return redirect('/');
+        return back();
     } 
 
     public function delete(Request $request)
     {
         Todolist::find($request->id)->delete();
-        return redirect('/');
+        return back();
     }
 
     public function find(Request $request)
@@ -74,9 +74,9 @@ class TaskController extends Controller
         $user_id = $request -> input('user_id');
         $form['user_id'] = Auth::id();
         $query = Todolist::query();
-        $query->join('tags', function ($query) use ($request){
+       /* $query->join('tags', function ($query) use ($request){
             $query->on('todolists.tag_id','=', 'tags.id');
-            });
+            });*/
 
         if($keyword!=null){
             $query->where(('todolists.name'), 'LIKE', "%{$keyword}%")->get();
@@ -101,8 +101,6 @@ class TaskController extends Controller
 
         
         $items = $query->get();
-        
-        
         
         return view('search', compact('items', 'keyword', 'tag_id', 'tags', 'user'));
     }

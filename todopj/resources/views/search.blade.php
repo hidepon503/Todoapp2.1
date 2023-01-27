@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="texttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexetexttexttexe">
+  <link rel="stylesheet" href="public/css/reset.css">
+  <link rel="icon" href="public/favicon1.ico">
   <title>COACHTECH</title>
   <style>
     body {
@@ -55,19 +58,23 @@
       color:#FF8080;
       border-radius:5px;
       cursor:pointer;
+      border:2px solid;
+      transition: all  0.3s ease;
     }
+
+    .todolist_headder_item_logout_button:hover{
+      width:120px;
+      height: 35px;
+      margin-left:20px;
+      background-color:#FF8080;
+      border-color:#FFFFFF;
+      color:#FFFFFF;
+      border-radius:5px;
+    }
+
+
 
     .todolist_find {
-    }
-
-    .todolist_find_button {
-      width:100px;
-      height: 35px;
-      margin: 0 0 1% 5%;
-      background-color:#FFFFFF;
-      border-color:#CDF119;
-      color:#CDF119;
-      border-radius:5px;
     }
 
     .todolist_warning {
@@ -80,6 +87,7 @@
       margin-left:5%;
       border-radius: 5px;
       border-color: #E6E6E6;
+      border:2px solid;
     }
 
     .todolist_table-select-tag {
@@ -89,16 +97,28 @@
       border-radius: 5px;
       border-color: #E6E6E6;
       text-align:center;
+      border:2px solid;
     }
     
-    .todolist_task-create-bottun {
+    .todolist_task-search-button {
       width:10%;
       height: 35px;
-      
       background-color:#FFFFFF;
       border-color:#e181fb;
       color:#e181fb;
       border-radius:5px;
+      border:2px solid;
+      transition: all  0.3s ease;
+    }
+
+    .todolist_task-search-button:hover {
+      width:10%;
+      height: 35px;
+      background-color:#e181fb;
+      border-color:#FFFFFF;
+      color:#FFFFFF;
+      border-radius:5px;
+      border:2px solid;
     }
 
     .todolist_table {
@@ -112,6 +132,7 @@
       height:25px;
       border-radius:5px;
       border-color: #E6E6E6;
+      border:2px solid;
     }
 
     .todolist_table-select-tag{
@@ -119,24 +140,49 @@
       width:60px;
       border-radius:5px;
       border-color: #E6E6E6;
+      border:2px solid;
     }
 
-    .todolist_table-edit-bottun{
+    .todolist_table-edit-button{
       width:60px;
       height: 35px;
       background-color:#FFFFFF;
       border-color: #f99770;;
       color:#f99770;
       border-radius:5px;
+      border:2px solid;
+      transition: all  0.3s ease;
+    }
+    .todolist_table-edit-button:hover{
+      width:60px;
+      height: 35px;
+      background-color:#F99770;
+      border-color: #FFFFFF;
+      color:#FFFFFF;
+      border-radius:5px;
+      border:2px solid;
+      transition: all  0.3s ease;
     }
 
-    .todolist_table-delete-bottun{
+    .todolist_table-delete-button{
       width:60px;
       height: 35px;
       background-color:#FFFFFF;
       border-color:#88fbe0;
       color:#88fbe0;
       border-radius:5px;
+      border:2px solid;
+      transition: all  0.3s ease;
+    }
+    .todolist_table-delete-button:hover{
+      width:60px;
+      height: 35px;
+      background-color:#88FBE0;
+      border-color:#FFFFFF;
+      color:#FFFFFF;
+      border-radius:5px;
+      border:2px solid;
+      transition: all  0.3s ease;
     }
 
     .todolist_return_button{
@@ -144,9 +190,22 @@
       height: 35px;
       margin: 0 0 1% 5%;
       background-color:#FFFFFF;
-      border-color:#CDF119;
-      color:#CDF119;
+      border-color:B6B8B8;
+      color:#B6B8B8;
       border-radius:5px;
+      border:2px solid;
+      transition: all  0.3s ease;
+    }
+    .todolist_return_button:hover{
+      width:100px;
+      height: 35px;
+      margin: 0 0 1% 5%;
+      background-color:#B6B8B8;
+      border-color:#FFFFFF;
+      color:#FFFFFF;
+      border-radius:5px;
+      border:2px solid;
+      transition: all  0.3s ease;
     }
 
 
@@ -184,15 +243,13 @@
             <input type="text" name="keyword" class="todolist_task-create-form"  >
             <select name="tag_id" class="todolist_table-select-tag">
               <option value=""></option>
-              @foreach($tags as $tag)
-              <!--セレクトボックスの検索機能が必要かも? -->
-               
+              @foreach($tags as $tag)          
                <option value="{{$tag->id}}">{{$tag->name}}</option>
               @endforeach
             </select>
             <!--<input type="hidden" name="user_id" value="{{$user->id}}">-->
 
-            <button class="todolist_task-create-bottun">検索</button>
+            <button class="todolist_task-search-button">検索</button>
         </form>
 
         <!--検索フォームここまで-->
@@ -227,14 +284,14 @@
                           </select>
                       </td>
                       <td>
-                        <button class="todolist_table-edit-bottun">更新</button>
+                        <button class="todolist_table-edit-button">更新</button>
                       </td>
                     </form>
                       <td>
                         <form action="/delete" method="POST">
                           @csrf
                           <input type="hidden" name="id" value="{{$item->id}}"> 
-                          <button class="todolist_table-delete-bottun">削除</button>
+                          <button class="todolist_table-delete-button">削除</button>
                         </form>                    
                       </td>
                 </tr>

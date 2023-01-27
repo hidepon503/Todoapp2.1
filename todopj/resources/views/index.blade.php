@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="public/css/reset.css">
+  <link rel="icon" href="public/favicon1.ico">
   <title>COACHTECH</title>
   <style>
     body {
@@ -55,9 +57,21 @@
       color:#FF8080;
       border-radius:5px;
       cursor:pointer;
+      border:2px solid;
+      transition: all  0.3s ease;
     }
 
-    .todolist_find_button {
+    .todolist_headder_item_logout_button:hover{
+      width:120px;
+      height: 35px;
+      margin-left:20px;
+      background-color:#FF8080;
+      border-color:#FFFFFF;
+      color:#FFFFFF;
+      border-radius:5px;
+    }
+
+    .todolist_find_button{
       width:100px;
       height: 35px;
       margin: 0 0 1% 5%;
@@ -65,6 +79,20 @@
       border-color:#CDF119;
       color:#CDF119;
       border-radius:5px;
+      border:2px solid;
+      transition: all  0.3s ease;
+    }
+
+    .todolist_find_button:hover{
+      width:100px;
+      height: 35px;
+      margin: 0 0 1% 5%;
+      background-color:#CDF119;
+      border-color:#FFFFFF;
+      color:#FFFFFF;
+      border-radius:5px;
+      border:2px solid;
+      transition: all  0.3s ease;
     }
 
     .todolist_warning {
@@ -91,10 +119,19 @@
     .todolist_task-create-bottun {
       width:10%;
       height: 35px;
-      
       background-color:#FFFFFF;
       border-color:#e181fb;
       color:#e181fb;
+      border-radius:5px;
+      transition: all  0.3s ease;
+    }
+
+    .todolist_task-create-bottun:hover {
+      width:10%;
+      height: 35px;
+      background-color:#E181FB;
+      border-color:#FFFFFF;
+      color:#FFFFFF;
       border-radius:5px;
     }
 
