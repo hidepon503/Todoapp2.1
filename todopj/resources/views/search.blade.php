@@ -188,6 +188,7 @@
                <option value="{{$tag->id}}">{{$tag->name}}</option>
               @endforeach
             </select>
+            <input type="hidden" name="user_id" > 
             <button class="todolist_task-create-bottun">検索</button>
         </form>
 

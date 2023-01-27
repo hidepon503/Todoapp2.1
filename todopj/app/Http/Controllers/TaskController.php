@@ -68,6 +68,7 @@ class TaskController extends Controller
     
     public function search(ClientRequest $request)
     {
+        $user = Auth::user();
         $keyword = $request -> input('keyword');
         $tag_id = $request -> input('tag_id');
         /*$user_id = $request -> input('user_id');
@@ -78,23 +79,24 @@ class TaskController extends Controller
             })->join('users',function ($query) use ($request){
             $query->on('todolists.user_id', '=', 'users.id');
             });
+        
         if(!empty($tag_id)){
             $query->where('tag_id', 'LIKE', $tag_id);
         }
         /*selectボックスなので下記が正解？*/
 
-        if(!empty($user_id)){
+        /*if(!empty($user_id)){
             $query->where('user', 'LIKE', $user_id);
-        }
-        
+        }ユーザーidでは検索を行わない？*/
         if(!empty($keyword)){
-            $query->where('name', 'LIKE', "%{keyword}%");
+            $query->where('todolists.name', 'LIKE', "%{keyword}%");
         }
 
         $items = $query->get();
-        $tag_list = Tag::all();
+        $tag = Tag::all();
+        
  
-        return view('search', compact('items', 'keyword', 'tag_id', 'tag_list'));
+        return view('search', ['items' =>$items, 'keyword' =>$keyword, 'tag_id'=>$tag_id, 'tag'=>$tag,'user'=>$user]);
     }
 
 
