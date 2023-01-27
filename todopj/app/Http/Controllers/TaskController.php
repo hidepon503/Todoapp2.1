@@ -60,25 +60,9 @@ class TaskController extends Controller
         /*$user_id = $request -> input('user_id');
         検索にユーザーは含まれていないので不要 */
         $query = Todolist::query();
-        $query->join('tags', function ($query) use ($request){
-            $query->on('todolists.tag_id','=', 'tags.id');
-            })->join('users',function ($query) use ($request){
-            $query->on('todolists.user_id', '=', 'users.id');
-            });
-
-        if(!empty($tag_id)){
-            $query->where('tag_id', 'LIKE', $tag_id);
-        }
-        /*if(!empty($user_id)){
-            $query->where('user', 'LIKE', $user_id);
-        }*/
-        if(!empty($keyword)){
-            $query->where('name', 'LIKE', "%{keyword}%");
-        }
-
         $items = $query->get();
         
-        return view('search', [ 'user' => $user, 'tags' => $tag]);
+        return view('search', [ 'user' => $user, 'tags' => $tag,]);
     }
 
     
@@ -94,19 +78,21 @@ class TaskController extends Controller
             })->join('users',function ($query) use ($request){
             $query->on('todolists.user_id', '=', 'users.id');
             });
-
         if(!empty($tag_id)){
             $query->where('tag_id', 'LIKE', $tag_id);
         }
-        /*if(!empty($user_id)){
+        /*selectボックスなので下記が正解？*/
+
+        if(!empty($user_id)){
             $query->where('user', 'LIKE', $user_id);
-        }*/
+        }
+        
         if(!empty($keyword)){
             $query->where('name', 'LIKE', "%{keyword}%");
         }
 
         $items = $query->get();
-        $tag = Tag::all();
+        $tag_list = Tag::all();
  
         return view('search', compact('items', 'keyword', 'tag_id', 'tag_list'));
     }
