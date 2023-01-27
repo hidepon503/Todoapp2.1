@@ -81,6 +81,7 @@ class TaskController extends Controller
         if(!empty($tag_id)){
             $query->where('tag_id', 'LIKE', $tag_id);
         }
+
         /*selectボックスなので下記が正解？*/
 
         /*if(!empty($user_id)){
@@ -91,9 +92,8 @@ class TaskController extends Controller
             $query->where(('todolists.name'), 'LIKE', "%{$keyword}%");
         }
         
-
         $items = $query->get();
-         
+        dd($query->get());
         
         return view('search', compact('items', 'keyword', 'tag_id', 'tags', 'user'));
     }
