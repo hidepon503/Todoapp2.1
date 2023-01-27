@@ -183,8 +183,10 @@
           @csrf
             <input type="text" name="keyword" class="todolist_task-create-form"  >
             <select name="tag_id" class="todolist_table-select-tag">
+              <option value=""></option>
               @foreach($tags as $tag)
               <!--セレクトボックスの検索機能が必要かも? -->
+               
                <option value="{{$tag->id}}">{{$tag->name}}</option>
               @endforeach
             </select>

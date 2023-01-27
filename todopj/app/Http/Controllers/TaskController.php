@@ -65,7 +65,7 @@ class TaskController extends Controller
     }
 
     
-    public function search(ClientRequest $request)
+    public function search(Request $request)
     {
         $tags = Tag::all();
         $user = Auth::user();
@@ -78,22 +78,31 @@ class TaskController extends Controller
             $query->on('todolists.tag_id','=', 'tags.id');
             });
 
-        if(!empty($tag_id)){
-            $query->where('tag_id', 'LIKE', $tag_id);
+        if($keyword!=null){
+            $query->where(('todolists.name'), 'LIKE', "%{$keyword}%")->get();
+        }
+        if($tag_id!=null){
+            $query->where('tag_id', $tag_id)->get();
         }
 
-        /*selectボックスなので下記が正解？*/
+        /*selectボックスなので下記が正解？
+        if(is_array($request->input('tag_id'))){
+            $query->where(function($q) use($request){
+                foreach($request->input('tag_id') as $tag_id){
+                    $q->orWhrer('tag_id,$tag_id);
+                }
+        )};
+        */
+
 
         /*if(!empty($user_id)){
             $query->where('user', 'LIKE', $user_id);
         }*/
 
-        if(!empty($keyword)){
-            $query->where(('todolists.name'), 'LIKE', "%{$keyword}%");
-        }
         
         $items = $query->get();
-        dd($query->get());
+        
+        
         
         return view('search', compact('items', 'keyword', 'tag_id', 'tags', 'user'));
     }
