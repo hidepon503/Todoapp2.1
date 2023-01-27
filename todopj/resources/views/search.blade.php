@@ -188,7 +188,8 @@
                <option value="{{$tag->id}}">{{$tag->name}}</option>
               @endforeach
             </select>
-            <input type="hidden" name="user_id" value="{{$user->id}}">
+            <!--<input type="hidden" name="user_id" value="{{$user->id}}">-->
+
             <button class="todolist_task-create-bottun">検索</button>
         </form>
 
@@ -207,7 +208,7 @@
               @foreach($items as $item)
                 <!--キーワードとタグの検索にヒットしたものを繰り返す-->
                 <tr>
-                      <td>{{$items->created_at}}</td>
+                      <td>{{$item->created_at}}</td>
                     <form action="/edit" class="" method="POST">
                       @csrf
                       <td>
@@ -217,7 +218,7 @@
                       <td>
                           <select name="tag_id" id="tag_id" class="todolist_table-select-tag" >
                             @foreach($tags as $tag)
-                              <option value="{{ $tag->id }}" @if ($tag->id == old('tag_id', $todolist['tag_id'])) selected @endif>
+                              <option value="{{ $tag->id }}" @if ($tag->id == old('tag_id', $item['tag_id'])) selected @endif>
                                 {{ $tag->name }}
                               </option>
                             @endforeach                   
@@ -230,7 +231,7 @@
                       <td>
                         <form action="/delete" method="POST">
                           @csrf
-                          <input type="hidden" name="id" value="{{$todolist->id}}"> 
+                          <input type="hidden" name="id" value="{{$item->id}}"> 
                           <button class="todolist_table-delete-bottun">削除</button>
                         </form>                    
                       </td>

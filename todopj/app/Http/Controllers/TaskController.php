@@ -37,7 +37,6 @@ class TaskController extends Controller
     public function edit(ClientRequest $request)
     {
         $form = $request->all();
-        
         $todolist = Todolist::find($request->id);
         unset($form['_token']);
         $form['user_id'] = Auth::id();
@@ -74,14 +73,11 @@ class TaskController extends Controller
         $tag_id = $request -> input('tag_id');
         $user_id = $request -> input('user_id');
         $form['user_id'] = Auth::id();
-         
         $query = Todolist::query();
         $query->join('tags', function ($query) use ($request){
             $query->on('todolists.tag_id','=', 'tags.id');
-            })->join('users',function ($query) use ($request){
-            $query->on('todolists.user_id', '=', 'users.id');
             });
-                    
+
         if(!empty($tag_id)){
             $query->where('tag_id', 'LIKE', $tag_id);
         }
@@ -92,12 +88,13 @@ class TaskController extends Controller
         }*/
 
         if(!empty($keyword)){
-            $query->where('todolists.name', 'LIKE', "%{keyword}%");
+            $query->where(('todolists.name'), 'LIKE', "%{$keyword}%");
         }
+        
 
         $items = $query->get();
-
- 
+         
+        
         return view('search', compact('items', 'keyword', 'tag_id', 'tags', 'user'));
     }
 
